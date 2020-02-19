@@ -1,0 +1,42 @@
+save_dir_root: './runs/run'
+
+########################################
+## Input graph settings
+cache_dir: './.cached_pdists'
+
+input_graph: '../data/tree40.dot'
+batching: 'nodewise'
+
+########################################
+## Embedding settings
+manifold:
+  object:
+    name: graphembed.manifolds.SymmetricPositiveDefinite
+    params:
+      n: 2
+      fast_symeig: True
+      fast_chol: True
+      requires_grad: True
+      use_stein_div: False
+
+objective_fn:
+  closure:
+    name: graphembed.objectives.KLDiveregenceLoss
+    params:
+      inference_model:
+        object:
+          name: graphembed.inference.stochastic_neighbors.StochasticNeighbor
+
+########################################
+## Training settings
+training_params:
+  alphas: [0.5]
+  n_epochs: 2000
+  batch_size: null
+  val_every_epochs: 20
+
+optim:
+  closure:
+    name: graphembed.optim.RiemannianSGD
+    params:
+      lr: 0.01

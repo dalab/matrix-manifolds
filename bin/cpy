@@ -1,0 +1,7 @@
+#!/bin/bash
+
+REMOTE_PY=/local/home/ccruceru/miniconda3/envs/matrix-repr/bin/python
+REMOTE_DIR=/local/home/ccruceru/code
+CMD="cd $REMOTE_DIR && CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES $REMOTE_PY $@"
+
+ssh ccruceru@dalabgpu.ethz.ch "$CMD"

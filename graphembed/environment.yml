@@ -1,0 +1,20 @@
+name: graphembed
+channels:
+  - pytorch-nightly
+  - conda-forge
+  - defaults
+dependencies:
+  - cython
+  - matplotlib
+  - networkit
+  - networkx
+  - numpy
+  - pip
+  - pydot
+  - pytest
+  - python=3.*
+  - pytorch
+  - ruamel.yaml
+  - scipy
+  - pip:
+    - tb-nightly

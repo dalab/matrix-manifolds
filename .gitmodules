@@ -1,0 +1,21 @@
+[submodule "misc/pymanopt"]
+	path = misc/pymanopt
+	url = git@github.com:pymanopt/pymanopt.git
+[submodule "misc/graph-curvature"]
+	path = misc/graph-curvature
+	url = https://github.com/saibalmars/GraphRicciCurvature
+[submodule "misc/graph-curvature-lib"]
+	path = misc/graph-curvature-lib
+	url = git@github.com:calincru/GraphRicciCurvature.git
+[submodule "misc/pymanopt-fork"]
+	path = misc/pymanopt-fork
+	url = git@github.com:calincru/pymanopt.git
+[submodule "misc/pymanopt-backend-rewrite"]
+	path = misc/pymanopt-backend-rewrite
+	url = git@github.com:nkoep/pymanopt.git
+[submodule "misc/autograd"]
+	path = misc/autograd
+	url = git@github.com:HIPS/autograd.git
+[submodule "geoopt"]
+	path = misc/geoopt
+	url = git@github.com:calincru/geoopt.git

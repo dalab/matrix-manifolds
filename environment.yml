@@ -1,0 +1,26 @@
+name: matrix-repr
+channels:
+  - pytorch-nightly  # nightly for the batch symeig/det implementations
+  - conda-forge
+  - defaults
+dependencies:
+  - autograd
+  - matplotlib
+  - networkit
+  - networkx
+  - numpy
+  - pip
+  - pydot
+  - pytest
+  - python=3.*
+  - pytorch
+  - ruamel.yaml
+  - sage
+  - scipy
+  - scikit-learn
+  - tqdm
+  - pip:
+    - tb-nightly
+    - git+https://github.com/calincru/pymanopt@master
+    - git+https://github.com/calincru/geoopt@master
+    - git+https://github.com/calincru/GraphRicciCurvature.git@modified

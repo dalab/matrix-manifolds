@@ -1,0 +1,42 @@
+#!/bin/bash
+
+declare -r DIR=$(pwd)
+declare -r RUNS_DIR=$DIR/runs
+declare -r PORT=9965
+
+# This is needed on some multi-user systems.
+# See https://github.com/tensorflow/tensorboard/issues/2010.
+export TMPDIR=$(mktemp -d)
+
+trap cleanup INT
+
+CURR_LOGDIR=
+TB_PID=
+
+last_logdir() {
+  echo "$RUNS_DIR/$(ls -t $RUNS_DIR | head -1)"
+}
+
+start_tb_last_dir() {
+  CURR_LOGDIR=$(last_logdir)
+  tensorboard --logdir $CURR_LOGDIR --port $PORT &
+  TB_PID=$!
+}
+
+cleanup() {
+  kill -9 $TB_PID &>/dev/null
+  wait $TB_PID &>/dev/null
+  exit 1
+}
+
+while true; do
+  if [ "$(last_logdir)" != "$CURR_LOGDIR" ]; then
+    echo "New run detected. Restarting tensorboard."
+    kill -9 $TB_PID &>/dev/null
+    wait $TB_PID &>/dev/null
+    start_tb_last_dir
+  fi
+
+  # sleep for some time before checking again
+  sleep 2
+done

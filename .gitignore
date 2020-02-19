@@ -1,0 +1,19 @@
+graphembed.egg-info/
+
+venv/
+tmp/
+output/
+runs/
+
+# python artifacts
+.ipynb_checkpoints/
+__pycache__/
+
+# Torch model checkpoints
+*.pt
+
+# install directories/artifacts
+build/
+dist/
+.eggs/
+mmrl.egg-info/

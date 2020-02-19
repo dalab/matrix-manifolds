@@ -1,0 +1,28 @@
+#!/bin/bash
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+TIMEOUT_SEC=3
+
+timeout $TIMEOUT_SEC rsync -e 'ssh -q' \
+  -rchaz "$DIR/.." \
+  --exclude='data/analysis' \
+  --exclude='misc/' \
+  --exclude='.*' \
+  --exclude='runs/' \
+  --exclude='output/' \
+  ccruceru@dalabgpu.ethz.ch:~/code &>/dev/null
+if [ $? -ne 0 ]; then
+  echo "Failed to copy data to dalabgpu."
+fi
+
+timeout $TIMEOUT_SEC rsync -e 'ssh -q' \
+  -rchaz "$DIR/.." \
+  --exclude='data/analysis' \
+  --exclude='misc/' \
+  --exclude='.*' \
+  --exclude='runs/' \
+  --exclude='output/' \
+  ccruceru@login.leonhard.ethz.ch:~/code &>/dev/null
+if [ $? -ne 0 ]; then
+  echo "Failed to copy data to leonhard."
+fi
