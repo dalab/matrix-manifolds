@@ -35,7 +35,7 @@ class Euclidean(Manifold):
     def inner(self, x, u, v, keepdim=False):
         return (u * v).sum(self.dims, keepdim=keepdim)
 
-    def proju(self, x, u):
+    def proju(self, x, u, inplace=False):
         return u
 
     def projx(self, x, inplace=False):

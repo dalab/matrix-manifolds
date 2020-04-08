@@ -55,8 +55,9 @@ class Grassmann(Manifold):
     def projx(self, x, inplace=False):
         # Represent the column space via an orthogonal matrix instead.
         x_new = tb.qr(x).Q
-        if inplace:
-            x.set_(x_new)
+        if not inplace:
+            return x_new
+        x.set_(x_new)
         return x
 
     def exp(self, x, u):

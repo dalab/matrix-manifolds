@@ -117,13 +117,18 @@ class SymmetricPositiveDefinite(Manifold):
         return norm_sq if squared else norm_sq.sqrt()
 
     def proju(self, x, u, inplace=False):
-        return tb.sym(u)
+        u_new = tb.sym(u)
+        if not inplace:
+            return u_new
+        u.set_(u_new)
+        return u
 
     def projx(self, x, inplace=False):
         x_new = tb.symapply(
                 tb.sym(x), lambda w: w, wmin=self.wmin, wmax=self.wmax)
-        if inplace:
-            x.set_(x_new)
+        if not inplace:
+            return x_new
+        x.set_(x_new)
         return x
 
     def egrad2rgrad(self, x, u):
