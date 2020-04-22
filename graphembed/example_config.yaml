@@ -4,39 +4,43 @@ save_dir_root: './runs/run'
 ## Input graph settings
 cache_dir: './.cached_pdists'
 
-input_graph: '../data/tree40.dot'
-batching: 'nodewise'
+input_graph: '../data/btree364.edges.gz'
 
 ########################################
 ## Embedding settings
-manifold:
-  object:
-    name: graphembed.manifolds.SymmetricPositiveDefinite
+embedding:
+  closure:
+    name: graphembed.modules.ManifoldEmbedding
     params:
-      n: 2
-      fast_symeig: True
-      fast_chol: True
-      requires_grad: True
-      use_stein_div: False
+      manifolds:
+        - object:
+            name: graphembed.manifolds.SymmetricPositiveDefinite
+            params:
+              n: 2
+              use_stein_div: False
 
+########################################
+## The objective
 objective_fn:
   closure:
     name: graphembed.objectives.KLDiveregenceLoss
     params:
-      inference_model:
-        object:
-          name: graphembed.inference.stochastic_neighbors.StochasticNeighbor
+      inference_model: 'sne'
+      inclusive: True
 
 ########################################
 ## Training settings
 training_params:
-  alphas: [0.5]
-  n_epochs: 2000
+  alpha: 10.0
+  n_epochs: 1500
   batch_size: null
-  val_every_epochs: 20
+  stabilize_every_epochs: 20
+  val_every_epochs: 50
 
-optim:
+embedding_optimizer:
   closure:
-    name: graphembed.optim.RiemannianSGD
+    name: graphembed.optim.RiemannianAdam
     params:
       lr: 0.01
+      max_grad_norm: 100
+      exact: False
